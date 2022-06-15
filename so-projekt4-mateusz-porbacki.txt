@@ -21,6 +21,7 @@ function continues
 echo " "
 echo "Kontynuowac? (t/n)"
 read TN
+
 if [ $TN = "t" ] ; then
 dodawanie
 else
@@ -35,6 +36,7 @@ cat baza.txt
 echo " "
 echo "Wrocic do menu: (t/n)"
 read TN 
+
 if [ $TN = "t" ] ; then
 menu
 else
