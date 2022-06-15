@@ -34,7 +34,8 @@ clear
 cat baza.txt
 echo " "
 echo "Wrocic do menu: (t/n)"
-read TN if [ $TN = "t" ] ; then
+read TN 
+if [ $TN = "t" ] ; then
 menu
 else
 exit
