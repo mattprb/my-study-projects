@@ -1,0 +1,40 @@
+#!/bin/bash
+
+
+function ponow_probe
+{
+echo "Czy chcesz jeszcze raz wpisac dane? (t/n)"
+read TN
+
+if [ $TN = "t" ] ; then
+clear
+szukanie
+elif [ $TN = "n" ] ; then
+clear
+exit
+fi
+}
+
+function szukanie
+{
+clear
+echo "Podaj katalog do pliku: "
+read katalog
+echo "Podaj plik: "
+read plik
+
+cd $katalog
+if [ -f $plik ] ; then
+echo "W katalogu:$katalog znajduje sie plik: $plik"
+echo "Zawartosc pliku: "
+echo "============================================================"
+cat $plik
+echo " "
+echo "============================================================"
+echo " "
+else
+echo "W podanym katalogu:$katalog nie ma pliku: $plik"
+fi
+ponow_probe
+}
+szukanie
