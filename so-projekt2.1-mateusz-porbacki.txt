@@ -1,0 +1,46 @@
+#!/bin/bash
+
+groupadd studenci_informatyki
+groupadd studenci_etyki
+
+function menu
+{
+echo "Podaj liczbe uzytkownikow: "
+read liczba_user
+polowa=$[liczba_user/2]
+for (( i=1; $i <=$polowa; i++ ))
+do
+	useradd -g studenci_informatyki -m user$i
+	echo "user$i:haslooo$i" | chpasswd
+	echo "Dodano user$i do grupy studenci_informatyki"
+done
+
+for (( $[polowa++]; polowa <= liczba_user; polowa++ ))
+do
+	useradd -g studenci_etyki -m user$polowa
+	echo "user$polowa:haslooo$polowa" | chpasswd
+	echo "Dodano user$polowa do grupy studenci_etyki"
+done
+
+echo "Czy chcesz wyswietlic uzytkownikow? (t/n)"
+read TN
+
+if [ $TN = "t" ] ; then
+clear
+cat /etc/passwd
+elif [ $TN = "n" ] ; then
+clear
+exit
+fi
+echo "Czy chcesz wrocic do menu? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+clear
+menu
+elif [ $TN = "n" ] ; then
+clear
+exit
+fi
+menu
+}
+menu
