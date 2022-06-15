@@ -1,0 +1,78 @@
+#!/bin/bash
+
+function dodawanie
+{
+clear
+echo "Podaj ilosc kolumn do bazy danych: "
+read kolumny
+i=1
+for ((i=1; i <=kolumny; i++ ))
+do
+	echo "Wpisz dane do $i kolumnny: "
+	read dane
+	echo -n -e "$dane\t" >> baza.txt
+done
+echo " " >> baza.txt
+continues
+}
+
+function continues
+{
+echo " "
+echo "Kontynuowac? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+dodawanie
+else
+menu
+fi
+}
+
+function cala_baza
+{
+clear
+cat baza.txt
+echo " "
+echo "Wrocic do menu: (t/n)"
+read TN if [ $TN = "t" ] ; then
+menu
+else
+exit
+fi
+}
+
+function wyswietlanie
+{
+echo "Podaj pierwsza kolumne: "
+read -r k1
+echo "Podaj druga kolumne: "
+read -r k2
+cat baza.txt | awk -v kol1="${k1}" -v kol2="${k2}" '{print $(kol1),$(kol2)}'
+}
+
+function menu
+{
+clear
+echo "[1] Dodawanie wierszy do bazy danych"
+echo "[2] Wyswietlanie calej bazy danych"
+echo "[3] Wyswietlanie okreslonych kolumn bazy danych"
+echo "[4] Wyjscie"
+echo " "
+echo "Wybierz opcje: "
+
+read opcja
+if [ $opcja = "1" ] ; then
+dodawanie
+fi
+if [ $opcja = "2" ] ; then
+cala_baza
+fi
+if [ $opcja = "3" ] ; then
+wyswietlanie
+fi
+if [ $opcja = "4" ] ; then
+clear
+exit
+fi
+}
+menu
