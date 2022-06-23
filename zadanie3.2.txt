@@ -1,0 +1,185 @@
+#!/bin/bash
+
+
+function zmien_nazwe
+{
+
+clear
+echo "[1] Zmien nazwe grupy"
+echo "[2] Zmien nazwe uzytkownika"
+echo " "
+echo "Wybierz opcje: "
+
+read opcja_zmien
+if [ $opcja_zmien = "1" ] ; then
+clear
+echo "Podaj stara nazwe grupy: "
+read stara_nazwa
+echo "Podaj nowa nazwe: "
+read nowa_nazwa
+groupmod -n $nowa_nazwa $stara_nazwa
+fi
+if [ $opcja_zmien = "2" ] ; then
+clear
+echo "Podaj stara nazwe uzytkownika: "
+read stara_nazwa_usr
+echo "Podaj nowa nazwe: "
+read nowa_nazwa_usr
+usermod -l $nowa_nazwa_usr $stara_nazwa_usr
+fi
+
+
+}
+
+
+function usun_z_grupy
+{
+clear
+echo "Podaj nazwe uzytkownika: "
+read nazwa_user
+echo "Podaj nazwe grupy: "
+read nazwa_grupy
+deluser $nazwa_user $nazwa_grupy
+echo " "
+echo "Czy chcesz powrocic do menu? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+menu
+else
+usuwanie_z_grupy
+fi
+}
+
+
+function dodwanie_do_grupy
+{
+clear
+echo "Podaj nazwe uzytkownika: "
+read nazwa_user
+echo "Podaj nazwe grupy: "
+read nazwa_grupy
+adduser $nazwa_user $nazwa_grupy
+echo " "
+echo "Czy chcesz powrocic do menu? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+menu
+else
+dodwanie_do_grupy
+fi
+}
+
+
+function zliczanie_kont
+{
+clear
+cat /etc/passwd
+echo " "
+echo " "
+echo "Liczba kont wynosi: "
+wc -l /etc/passwd
+echo " "
+echo "Czy chcesz powrocic do menu? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+menu
+else
+zliczanie_kont
+fi
+}
+
+
+function zliczanie_grup
+{
+clear
+cat /etc/group
+echo " "
+echo "Liczba grup w systemie: "
+wc -l /etc/group
+echo " "
+echo "Czy chcesz powrocic do menu? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+menu
+else
+zliczanie_grup
+fi
+}
+
+
+function tworzenie_grupy
+{
+clear
+echo "Podaj nazwe grupy: "
+read nazwa_grupy
+addgroup $nazwa_grupy
+echo " "
+echo "Czy chcesz ponownie dodac grupe? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+tworzenie_grupy
+else
+menu
+fi
+}
+
+function usuwanie_grupy
+{
+clear
+echo "Podaj nazwe grupy: "
+read nazwa_grupy
+delgroup $nazwa_grupy
+echo " "
+echo "Czy chcesz ponownie usunac grupe? (t/n)"
+read TN
+if [ $TN = "t" ] ; then
+usuwanie_grupy
+else
+menu
+fi
+}
+
+
+function menu
+{
+clear
+echo "[1] Tworzenie grupy"
+echo "[2] Usuwanie grupy"
+echo "[3] Dodawanie uzytkownika do grupy"
+echo "[4] Usuwanie użytkownika z grupy"
+echo "[5] Zliczanie grup"
+echo "[6] Zliczanie kont"
+echo "[7] Zmiana nazwy kont"
+echo "[8] Wyjscie"
+echo " "
+echo "Wybierz opcje: "
+
+read opcja
+if [ $opcja = "1" ] ; then
+tworzenie_grupy
+fi
+if [ $opcja = "2" ] ; then
+usuwanie_grupy
+fi
+if [ $opcja = "3" ] ; then
+dodwanie_do_grupy
+fi
+if [ $opcja = "4" ] ; then
+usun_z_grupy
+fi
+
+if [ $opcja = "5" ] ; then
+zliczanie_grup
+fi
+if [ $opcja = "6" ] ; then
+zliczanie_kont
+fi
+if [ $opcja = "7" ] ; then
+zmien_nazwe
+fi
+if [ $opcja = "8" ] ; then
+exit
+fi
+
+}
+menu
